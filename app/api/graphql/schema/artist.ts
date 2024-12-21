@@ -18,11 +18,6 @@ builder.prismaObject("Artist", {
   }),
 });
 
-builder.queryField('getArtist', (t) => t.prismaField({
-  type: 'Artist',
-  resolve: async () => await prisma.artist.findFirst()
-}));
-
 const UpdateArtistInput = builder.inputType('UpdateArtistInput', {
   fields: (t) => ({
     avatar: t.string(),
@@ -37,12 +32,18 @@ const UpdateArtistInput = builder.inputType('UpdateArtistInput', {
   }),
 });
 
+builder.queryField('getArtist', (t) => t.prismaField({
+  type: 'Artist',
+  resolve: async () => await prisma.artist.findFirst()
+}));
+
 builder.mutationField('updateArtist', (t) => t.prismaField({
   type: 'Artist',
+  authScopes: { isLogin: true },
   args: {
     input: t.arg({ type: UpdateArtistInput, required: true })
   },
-  resolve: async (parent, _, args) => {
+  resolve: async (query, _, args) => {
     const { input } = args;
 
     const artist = await prisma.artist.findFirst();
@@ -52,6 +53,7 @@ builder.mutationField('updateArtist', (t) => t.prismaField({
     }
 
     return await prisma.artist.update({
+      ...query,
       where: { id: artist.id },
       data: {
         avatar: input?.avatar ?? artist.avatar,

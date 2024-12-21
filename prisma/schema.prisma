@@ -32,7 +32,7 @@ model Material {
   name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Artwork   Artwork? @relation(fields: [artworkId], references: [id])
+  Artwork   Artwork? @relation(fields: [artworkId], references: [id], onDelete: Restrict)
   artworkId String?
 }
 
@@ -48,7 +48,7 @@ model Artwork {
   id             String     @id @default(uuid())
   title          String
   materials      Material[]
-  subject        Subject?   @relation(fields: [subjectId], references: [id])
+  subject        Subject?   @relation(fields: [subjectId], references: [id], onDelete: Restrict)
   width          Float
   height         Float
   depth          Float
