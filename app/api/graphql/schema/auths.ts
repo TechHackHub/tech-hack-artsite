@@ -10,7 +10,7 @@ interface LoginResponse {
 const LoginResponseRef = builder.objectRef<LoginResponse>('LoginResponse');
 
 LoginResponseRef.implement({
-  description: 'Long necks, cool patterns, taller than you.',
+  description: 'LoginResponse',
   fields: (t) => ({
     accessToken: t.exposeString('accessToken')
   }),

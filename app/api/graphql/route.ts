@@ -6,7 +6,10 @@ import { schema } from "./schema";
 import { Credential } from "@/app/libs/credential";
 
 const server = new ApolloServer({
-  schema
+  schema,
+  // csrfPrevention: false
+  // introspection: false // dev playground for test api
+  // validationRules:[] // apollo set depthLimit
 });
 
 const handler = startServerAndCreateNextHandler<NextRequest>(server, {
@@ -25,6 +28,7 @@ const handler = startServerAndCreateNextHandler<NextRequest>(server, {
       return { req, res }
     }
   },
+
 });
 
 export async function GET(request: NextRequest) {
@@ -34,3 +38,10 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   return handler(request);
 }
+
+export const config = {
+  api: {
+    bodyParser: false,
+    sizeLimit: '10mb',
+  }
+};
