@@ -3,6 +3,7 @@
 import "./ui/globals.css";
 import { inter } from "@/app/ui/fonts";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function RootLayout({
   children,
@@ -12,7 +13,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <SessionProvider>
-        <body className={`${inter.className} antialiased`}>{children}</body>
+        <body className={`${inter.className} antialiased`}>
+          {children}
+          <Toaster />
+        </body>
       </SessionProvider>
     </html>
   );

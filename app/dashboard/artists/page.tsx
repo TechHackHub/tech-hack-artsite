@@ -1,24 +1,51 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import React, { useEffect } from "react";
-import { getArtist } from "./actions";
+import React from "react";
+import { toast } from "sonner";
+import ArtistForm from "@/app/ui/dashboard/ArtistForm";
+import PasswordChangeForm from "@/app/ui/dashboard/PasswordChangeForm";
+import type { Artist } from "@prisma/client";
+import Loader from "@/app/ui/dashboard/Loader";
+import { useArtist, useUpdateArtist } from "./hooks";
+import { isActionError } from "@/app/libs/errors";
 
 const ArtistPage = () => {
-  const { data, status } = useSession();
+  const { isLoading, artist } = useArtist();
+  const { isLoading: isUpdating, update, updatePassword } = useUpdateArtist();
 
-  useEffect(() => {
-    const init = async () => {
-      const artist = await getArtist();
-      console.log("artist...", artist);
-    };
+  const handleUpdateSubmit = async (
+    formData: Omit<Artist, "id" | "password" | "createdAt" | "updatedAt">
+  ) => {
+    if (!artist?.id) return;
 
-    init();
-  }, []);
+    const updated = await update(artist.id, formData);
 
-  console.log("data...", data, status);
+    if (isActionError(updated)) {
+      toast.error(updated.error);
+    } else {
+      toast.success("Artist updated");
+    }
+  };
 
-  return <div className="text-red-300">page</div>;
+  // const handlePasswordChangeSubmit = async (formData) => {};
+
+  return isLoading ? (
+    <Loader />
+  ) : (
+    <div className="flex flex-col gap-4 lg:flex-row">
+      <div className="flex-1">
+        <ArtistForm
+          isLoading={isUpdating}
+          artist={artist}
+          onSubmit={handleUpdateSubmit}
+        />
+      </div>
+
+      <div className="w-full lg:w-1/3">
+        <PasswordChangeForm />
+      </div>
+    </div>
+  );
 };
 
 export default ArtistPage;

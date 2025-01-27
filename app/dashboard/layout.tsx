@@ -51,7 +51,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Breadcrumb>
           </div>
         </header>
-        {children}
+
+        <div className="container mx-auto p-4">
+          {children}
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );
