@@ -1,7 +1,8 @@
 import React from "react";
+import TransitionPage from "@/components/TransitionPage";
 
 const AchievementsPage = () => {
-  return <div>AchievementsPage</div>;
+  return <TransitionPage>AchievementsPage</TransitionPage>;
 };
 
 export default AchievementsPage;

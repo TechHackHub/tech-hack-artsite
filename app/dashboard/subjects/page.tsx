@@ -1,7 +1,12 @@
 import React from "react";
+import TransitionPage from "@/components/TransitionPage";
 
 const SubjectPage = () => {
-  return <div>SubjectPage</div>;
+  return (
+    <TransitionPage>
+      <div>SubjectPage</div>
+    </TransitionPage>
+  );
 };
 
 export default SubjectPage;

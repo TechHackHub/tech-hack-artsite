@@ -3,11 +3,14 @@
 import React from "react";
 import { toast } from "sonner";
 import ArtistForm from "@/app/ui/dashboard/ArtistForm";
-import PasswordChangeForm from "@/app/ui/dashboard/PasswordChangeForm";
+import PasswordChangeForm, {
+  PasswordChangeFormType,
+} from "@/app/ui/dashboard/PasswordChangeForm";
 import type { Artist } from "@prisma/client";
 import Loader from "@/app/ui/dashboard/Loader";
 import { useArtist, useUpdateArtist } from "./hooks";
 import { isActionError } from "@/app/libs/errors";
+import TransitionPage from "@/components/TransitionPage";
 
 const ArtistPage = () => {
   const { isLoading, artist } = useArtist();
@@ -27,24 +30,49 @@ const ArtistPage = () => {
     }
   };
 
-  // const handlePasswordChangeSubmit = async (formData) => {};
+  const handlePasswordChangeSubmit = async (
+    formData: PasswordChangeFormType
+  ): Promise<boolean> => {
+    if (!artist?.id) return false;
 
-  return isLoading ? (
-    <Loader />
-  ) : (
-    <div className="flex flex-col gap-4 lg:flex-row">
-      <div className="flex-1">
-        <ArtistForm
-          isLoading={isUpdating}
-          artist={artist}
-          onSubmit={handleUpdateSubmit}
-        />
-      </div>
+    const updated = await updatePassword(
+      artist.id,
+      formData.oldpassword,
+      formData.newpassword
+    );
 
-      <div className="w-full lg:w-1/3">
-        <PasswordChangeForm />
-      </div>
-    </div>
+    if (updated && isActionError(updated)) {
+      toast.error(updated.error);
+      return false;
+    } else {
+      toast.success("Password updated");
+      return updated?.data ?? false;
+    }
+  };
+
+  return (
+    <TransitionPage>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-col gap-4 lg:flex-row">
+          <div className="flex-1">
+            <ArtistForm
+              isLoading={isUpdating}
+              artist={artist}
+              onSubmit={handleUpdateSubmit}
+            />
+          </div>
+
+          <div className="w-full lg:w-1/3">
+            <PasswordChangeForm
+              isLoading={isUpdating}
+              onSubmit={handlePasswordChangeSubmit}
+            />
+          </div>
+        </div>
+      )}
+    </TransitionPage>
   );
 };
 

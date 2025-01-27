@@ -14,7 +14,9 @@ export const getArtist = async () => {
   }
 }
 
-export const updateArtist = async (id: string, data: Omit<Artist, "id" | "password" | "createdAt" | "updatedAt">): Promise<ServerActionResponse<Omit<Artist, "password">>> => {
+type UpdateArtist = { data: Omit<Artist, "id" | "password" | "createdAt" | "updatedAt"> };
+
+export const updateArtist = async (id: string, data: Omit<Artist, "id" | "password" | "createdAt" | "updatedAt">): Promise<ServerActionResponse<UpdateArtist>> => {
   try {
     const updated = await prisma.artist.update({
       where: { id },
@@ -26,19 +28,22 @@ export const updateArtist = async (id: string, data: Omit<Artist, "id" | "passwo
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...rest } = updated;
 
-    return rest;
+    return { data: rest };
   } catch (e) {
     console.log("update artist failed,", e);
     return { error: `Error updating artist, ${JSON.stringify(e)}` };
   }
 }
 
-export const updateArtistPassword = async (id: string, oldPassword: string, newPassword: string): Promise<ServerActionResponse<boolean>> => {
+
+type UpdateArtistPassword = { data: boolean };
+
+export const updateArtistPassword = async (id: string, oldPassword: string, newPassword: string): Promise<ServerActionResponse<UpdateArtistPassword>> => {
   try {
     const artist = await prisma.artist.findUnique({ where: { id } });
 
     if (!artist) {
-      return false;
+      return { data: false };
     }
 
     const isPasswordValid = await Bcrypt.comparePassword(oldPassword, artist.password);
@@ -54,7 +59,9 @@ export const updateArtistPassword = async (id: string, oldPassword: string, newP
       data: { password: newHashedPassword }
     });
 
-    return true;
+    revalidatePath("/dashboard/artists");
+
+    return { data: true };
   } catch (e) {
     console.log("update password failed,", e);
     return { error: `Error updating password, ${JSON.stringify(e)}` };

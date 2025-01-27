@@ -62,7 +62,7 @@ const ArtistForm: React.FC<Props> = ({ isLoading, artist, onSubmit }) => {
   });
 
   const {
-    formState: { isDirty },
+    formState: { isDirty, isValid },
   } = form;
 
   const handleSubmit = async (data: ArtistFormType) => {
@@ -150,7 +150,11 @@ const ArtistForm: React.FC<Props> = ({ isLoading, artist, onSubmit }) => {
               </InnerCard>
             </div>
 
-            <Button type="submit" loading={isLoading} disabled={!isDirty}>
+            <Button
+              type="submit"
+              loading={isLoading}
+              disabled={!isDirty || !isValid}
+            >
               Update
             </Button>
           </form>

@@ -1,4 +1,6 @@
 "use client";
+
+import { useEffect } from "react";
 import AppSidebar from "@/app/ui/dashboard/AppSidebar";
 import {
   Breadcrumb,
@@ -16,7 +18,6 @@ import {
 } from "@/components/ui/sidebar";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { status } = useSession();
@@ -52,9 +53,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        <div className="container mx-auto p-4">
-          {children}
-        </div>
+        <div className="container mx-auto p-4">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );
