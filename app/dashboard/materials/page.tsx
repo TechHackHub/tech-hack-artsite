@@ -14,8 +14,8 @@ import {
 import { formDateTimeToString } from "@/app/libs/utils";
 import CreateButton from "@/components/CreateButton";
 import AppDialog from "@/components/AppDialog";
-import MaterialForm from "@/components/materials/MaterialForm";
-import { Material } from "@/app/api/materials/route";
+import MaterialForm from "@/app/dashboard/materials/components/MaterialForm";
+import { Material } from "./types";
 
 const MaterialPage = () => {
   const [isOpen, setIsOpen] = useState(false);

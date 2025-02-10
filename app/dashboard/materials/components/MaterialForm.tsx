@@ -4,10 +4,10 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
-import { Form } from "../ui/form";
-import TextField from "../inputs/TextField";
-import { Material } from "@prisma/client";
-import { Button } from "../ui/button";
+import { Material } from "../types";
+import { Form } from "@/components/ui/form";
+import TextField from "@/components/inputs/TextField";
+import { Button } from "@/components/ui/button";
 
 const schema = yup.object().shape({
   name: yup.string().default("").required("Name is required"),

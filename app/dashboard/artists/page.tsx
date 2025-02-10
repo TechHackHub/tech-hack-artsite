@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import ArtistForm from "@/app/ui/dashboard/ArtistForm";
+import ArtistForm from "./components/ArtistForm";
 import PasswordChangeForm, {
   PasswordChangeFormType,
-} from "@/app/ui/dashboard/PasswordChangeForm";
+} from "./components/PasswordChangeForm";
 import Loader from "@/app/ui/dashboard/Loader";
 import { useArtist, useUpdateArtist } from "./hooks";
 import TransitionPage from "@/components/TransitionPage";

@@ -1,9 +1,9 @@
 "use client";
 
 import { toast } from "sonner";
-import { Material } from "@/app/api/materials/route";
 import useAppQuery from "@/app/libs/hooks/useAppQuery";
 import useAppMutation from "@/app/libs/hooks/useAppMutation";
+import { Material } from "./types";
 
 const QUERY_KEY = "materials";
 
