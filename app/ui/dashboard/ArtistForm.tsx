@@ -2,7 +2,6 @@ import React from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import type { Artist } from "@prisma/client";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -10,6 +9,7 @@ import TextField from "@/components/inputs/TextField";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import TextareaField from "@/components/inputs/TextareaField";
 import AvatarUploadField from "@/components/inputs/AvatarUploadField";
+import { Artist, UpdateArtist } from "@/app/dashboard/artists/types";
 
 const InnerCard: React.FC<{ title: string; children: React.ReactNode }> = ({
   title,
@@ -41,7 +41,7 @@ type Props = {
   isLoading?: boolean;
   artist?: Artist | null;
   onSubmit: (
-    artist: Omit<Artist, "id" | "password" | "createdAt" | "updatedAt">
+    artist: Omit<UpdateArtist, "oldPassword" | "newPassword">
   ) => Promise<void>;
 };
 

@@ -1,52 +1,42 @@
 "use client";
 
 import React from "react";
-import { toast } from "sonner";
 import ArtistForm from "@/app/ui/dashboard/ArtistForm";
 import PasswordChangeForm, {
   PasswordChangeFormType,
 } from "@/app/ui/dashboard/PasswordChangeForm";
-import type { Artist } from "@prisma/client";
 import Loader from "@/app/ui/dashboard/Loader";
 import { useArtist, useUpdateArtist } from "./hooks";
-import { isActionError } from "@/app/libs/errors";
 import TransitionPage from "@/components/TransitionPage";
+import { UpdateArtist } from "./types";
 
 const ArtistPage = () => {
-  const { isLoading, artist } = useArtist();
+  const { isLoading, data: artist } = useArtist();
   const { isLoading: isUpdating, update, updatePassword } = useUpdateArtist();
 
   const handleUpdateSubmit = async (
-    formData: Omit<Artist, "id" | "password" | "createdAt" | "updatedAt">
+    formData: Omit<UpdateArtist, "oldPassword" | "newPassword">
   ) => {
     if (!artist?.id) return;
 
-    const updated = await update(artist.id, formData);
-
-    if (isActionError(updated)) {
-      toast.error(updated.error);
-    } else {
-      toast.success("Artist updated");
-    }
+    await update(artist.id, formData);
   };
 
   const handlePasswordChangeSubmit = async (
     formData: PasswordChangeFormType
   ): Promise<boolean> => {
-    if (!artist?.id) return false;
+    try {
+      if (!artist?.id) return false;
 
-    const updated = await updatePassword(
-      artist.id,
-      formData.oldpassword,
-      formData.newpassword
-    );
+      await updatePassword(
+        artist.id,
+        formData.oldpassword,
+        formData.newpassword
+      );
 
-    if (updated && isActionError(updated)) {
-      toast.error(updated.error);
+      return true;
+    } catch {
       return false;
-    } else {
-      toast.success("Password updated");
-      return updated?.data ?? false;
     }
   };
 

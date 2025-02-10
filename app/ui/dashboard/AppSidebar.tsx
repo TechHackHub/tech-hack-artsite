@@ -31,9 +31,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Artist } from "@/app/dashboard/types";
-import { getArtist } from "@/app/dashboard/artists/actions";
+import { Artist } from "@/app/dashboard/artists/types";
+
 import { useEffect, useState } from "react";
+import { useArtist } from "@/app/dashboard/artists/hooks";
 
 const menuItems = [
   {
@@ -64,6 +65,8 @@ const menuItems = [
 ];
 
 const AppSidebar = () => {
+  const { data: artist } = useArtist();
+
   const pathname = usePathname();
 
   const [user, setUser] = useState<Pick<
@@ -72,22 +75,8 @@ const AppSidebar = () => {
   > | null>(null);
 
   useEffect(() => {
-    const getUser = async () => {
-      const artist = await getArtist();
-
-      if (artist) {
-        setUser({
-          avatar: artist.avatar,
-          name: artist.name,
-          email: artist.email,
-        });
-      }
-
-      setUser(artist);
-    };
-
-    getUser();
-  }, []);
+    setUser(artist ?? null);
+  }, [artist]);
 
   const handleLogout = async () => {
     await signOut({ redirect: false, callbackUrl: "/login" });

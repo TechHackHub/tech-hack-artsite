@@ -43,7 +43,7 @@ const useAppMutation = <TData, TVariables, TParams = void>({
 
   return useMutation<
     TData,
-    AxiosError,
+    AxiosError<{ message?: string }>,
     { data?: TVariables; params?: TParams }
   >({
     mutationFn: defaultRequest,
@@ -54,11 +54,13 @@ const useAppMutation = <TData, TVariables, TParams = void>({
 
       onSuccess?.(data);
     },
-    onError: (error: AxiosError) => {
+    onError: (error: AxiosError<{ message?: string }>) => {
       console.log(error);
 
+      const message = error?.response?.data?.message ?? error?.message;
+
       if (showErrorToast) {
-        toast.error(error.message);
+        toast.error(message);
       }
 
       onError?.(error);

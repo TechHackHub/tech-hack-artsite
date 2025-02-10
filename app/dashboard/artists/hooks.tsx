@@ -1,42 +1,33 @@
-import { useEffect, useState } from "react";
-import { getArtist, updateArtist, updateArtistPassword } from "./actions";
-import type { Artist } from "@prisma/client";
+import useAppQuery from "@/app/libs/hooks/useAppQuery";
+import { Artist, UpdateArtist } from "./types";
+import useAppMutation from "@/app/libs/hooks/useAppMutation";
+import { toast } from "sonner";
+
+const QUERY_KEY = "artist";
 
 export const useArtist = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [artist, setArtist] = useState<Artist | null>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-
-        const result = await getArtist();
-        setArtist(result);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { isLoading, artist };
+  return useAppQuery<Artist | null>({
+    queryKey: [QUERY_KEY],
+    url: "/api/artist/",
+  });
 };
 
 export const useUpdateArtist = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, mutateAsync } = useAppMutation<
+    Artist,
+    UpdateArtist,
+    { id: string }
+  >({
+    method: "PUT",
+    url: ({ id }) => `/api/artist/${id}`,
+    invalidateQueries: [QUERY_KEY],
+    onSuccess: () => {
+      toast.error("Artist updated");
+    },
+  });
 
-  const update = async (
-    id: string,
-    data: Omit<Artist, "id" | "password" | "createdAt" | "updatedAt">
-  ) => {
-    try {
-      setIsLoading(true);
-      return await updateArtist(id, data);
-    } finally {
-      setIsLoading(false);
-    }
+  const update = async (id: string, data: UpdateArtist) => {
+    return await mutateAsync({ data, params: { id } });
   };
 
   const updatePassword = async (
@@ -44,12 +35,10 @@ export const useUpdateArtist = () => {
     oldPassword: string,
     newPassword: string
   ) => {
-    try {
-      setIsLoading(true);
-      return await updateArtistPassword(id, oldPassword, newPassword);
-    } finally {
-      setIsLoading(false);
-    }
+    return await mutateAsync({
+      data: { oldPassword, newPassword },
+      params: { id },
+    });
   };
 
   return { isLoading, update, updatePassword };
