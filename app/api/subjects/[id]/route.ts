@@ -11,20 +11,20 @@ export const PUT = async (req: Request, { params }: RouteParams) => {
       return NextResponse.json({ message: 'id required' }, { status: 400 });
     }
 
-    const isMaterialExist = await prisma.material.findUnique({ where: { id } });
+    const isSubjectExist = await prisma.subject.findUnique({ where: { id } });
 
-    if (!isMaterialExist) {
-      return NextResponse.json({ message: 'Material not found' }, { status: 404 });
+    if (!isSubjectExist) {
+      return NextResponse.json({ message: 'Subject not found' }, { status: 404 });
     }
 
     const { name } = await req.json();
 
-    const material = await prisma.material.update({ where: { id }, data: { name } });
+    const subject = await prisma.subject.update({ where: { id }, data: { name } });
 
-    return NextResponse.json({ data: material });
+    return NextResponse.json({ data: subject });
   } catch (e) {
     console.error("update error", e);
-    return NextResponse.json({ message: 'Material update failed' }, { status: 500 });
+    return NextResponse.json({ message: 'Subject update failed' }, { status: 500 });
   }
 }
 
@@ -37,17 +37,17 @@ export const DELETE = async (req: Request, { params }: RouteParams) => {
       return NextResponse.json({ message: 'id required' }, { status: 400 });
     }
 
-    const isMaterialExist = await prisma.material.findUnique({ where: { id } });
+    const isSubjectExist = await prisma.subject.findUnique({ where: { id } });
 
-    if (!isMaterialExist) {
-      return NextResponse.json({ message: 'Material not found' }, { status: 404 });
+    if (!isSubjectExist) {
+      return NextResponse.json({ message: 'Subject not found' }, { status: 404 });
     }
 
-    await prisma.material.delete({ where: { id } });
+    await prisma.subject.delete({ where: { id } });
 
     return NextResponse.json({ status: 204 });
   } catch (e) {
     console.error("delete error", e);
-    return NextResponse.json({ message: 'Material delete failed' }, { status: 500 });
+    return NextResponse.json({ message: 'Subject delete failed' }, { status: 500 });
   }
 }

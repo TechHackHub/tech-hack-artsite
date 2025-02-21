@@ -20,7 +20,8 @@ import {
 import { Button } from "./button";
 import { Skeleton } from "./skeleton";
 
-interface DataTableProps<TData, TValue> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface DataTableProps<TData = any, TValue = any> {
   loading?: boolean;
   columns: ColumnDef<TData, TValue>[];
   toolbars?: React.ReactNode[];
@@ -65,7 +66,7 @@ const DataTable = <TData, TValue>({
   return (
     <div className="flex flex-col gap-2">
       {/* toolbar */}
-      <div className="flex justify-end gap-2">
+      <div className="flex justify-end gap-2 py-4">
         {toolbars?.map((toolbar, index) => (
           <div key={index}>{toolbar}</div>
         ))}

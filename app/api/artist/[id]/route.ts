@@ -1,10 +1,7 @@
 import Bcrypt from '@/app/libs/bcrypt';
 import prisma from '@/app/libs/prisma';
 import { NextResponse } from 'next/server';
-
-type RouteParams = {
-  params: Promise<{ id: string }>
-};
+import { RouteParams } from '@/app/api/types';
 
 
 export const PUT = async (req: Request, { params }: RouteParams) => {

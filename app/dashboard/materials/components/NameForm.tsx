@@ -4,7 +4,6 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
-import { Material } from "../types";
 import { Form } from "@/components/ui/form";
 import TextField from "@/components/inputs/TextField";
 import { Button } from "@/components/ui/button";
@@ -13,23 +12,24 @@ const schema = yup.object().shape({
   name: yup.string().default("").required("Name is required"),
 });
 
-type MaterialFormType = yup.InferType<typeof schema>;
+type NameFormType = yup.InferType<typeof schema>;
 
-type MaterialFormProps = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type NameFormProps<TData = NameFormType> = {
   loading?: boolean;
 
-  initialValues?: Pick<Material, "name"> | null;
+  initialValues?: TData | null;
   onCancel?: () => void;
-  onSubmit: (values: Pick<Material, "name">) => Promise<void>;
+  onSubmit: (values: TData) => Promise<void>;
 };
 
-const MaterialForm: React.FC<MaterialFormProps> = ({
+const NameForm = <TData,>({
   loading,
   initialValues,
   onCancel,
   onSubmit,
-}) => {
-  const form = useForm<MaterialFormType>({
+}: NameFormProps<TData>) => {
+  const form = useForm<NameFormType>({
     defaultValues: { name: "" },
     resolver: yupResolver(schema),
   });
@@ -44,8 +44,8 @@ const MaterialForm: React.FC<MaterialFormProps> = ({
     }
   }, [form, initialValues]);
 
-  const handleSubmit = async (values: MaterialFormType) => {
-    await onSubmit(values);
+  const handleSubmit = async (values: NameFormType) => {
+    await onSubmit(values as TData);
   };
 
   return (
@@ -72,4 +72,4 @@ const MaterialForm: React.FC<MaterialFormProps> = ({
   );
 };
 
-export default MaterialForm;
+export default NameForm;

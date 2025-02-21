@@ -14,7 +14,7 @@ import {
 import { formDateTimeToString } from "@/app/libs/utils";
 import CreateButton from "@/components/CreateButton";
 import AppDialog from "@/components/AppDialog";
-import MaterialForm from "@/app/dashboard/materials/components/MaterialForm";
+import NameForm from "./components/NameForm";
 import { Material } from "./types";
 
 const MaterialPage = () => {
@@ -110,7 +110,7 @@ const MaterialPage = () => {
         isOpen={isOpen}
         onOpenChange={setIsOpen}
       >
-        <MaterialForm
+        <NameForm<Pick<Material, "name">>
           loading={isCreateing}
           onSubmit={handleCreateSubmit}
           onCancel={() => setIsOpen(false)}
@@ -123,7 +123,7 @@ const MaterialPage = () => {
         isOpen={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
       >
-        <MaterialForm
+        <NameForm<Pick<Material, "name">>
           loading={isUpdating}
           initialValues={editingMaterial}
           onSubmit={handleEditSubmit}
