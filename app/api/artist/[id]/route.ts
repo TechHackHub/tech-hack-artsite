@@ -2,35 +2,45 @@ import Bcrypt from '@/app/libs/bcrypt';
 import prisma from '@/app/libs/prisma';
 import { NextResponse } from 'next/server';
 import { RouteParams } from '@/app/api/types';
+import { handleApiError, verifyEntityExists } from '@/app/libs/utils';
+import { validateIdParamExistsAsync } from '@/app/libs/validations';
+import { validateSubjectBodyAsync } from '../../subjects/validations';
+import { BadRequestError } from '@/app/libs/errors';
+
+const handlePasswordUpdate = async (
+  oldPassword: string,
+  newPassword: string,
+  currentPassword: string
+): Promise<{ password: string } | null> => {
+  const isPasswordValid = await Bcrypt.comparePassword(oldPassword, currentPassword);
+
+  if (!isPasswordValid) {
+    throw new BadRequestError('Old password is incorrect');
+  }
+
+  const newHashedPassword = await Bcrypt.hashPassword(newPassword);
+  return { password: newHashedPassword };
+}
 
 
 export const PUT = async (req: Request, { params }: RouteParams) => {
   try {
-    const { id } = await params;
+    const routeParams = await params;
+    await validateIdParamExistsAsync(routeParams);
 
-    if (!id) {
-      return NextResponse.json({ message: 'id required' }, { status: 400 });
-    }
+    const body = await req.json();
+    await validateSubjectBodyAsync(body);
 
-    const artist = await prisma.artist.findUnique({ where: { id } });
+    const { id } = routeParams;
+    await verifyEntityExists("artist", id);
 
-    if (!artist) {
-      return NextResponse.json({ message: 'Artist not found' }, { status: 404 });
-    }
+    const artist = await prisma.artist.findUniqueOrThrow({ where: { id } });
 
-    const { oldPassword, newPassword, ...rest } = await req.json();
+    const { oldPassword, newPassword, ...rest } = body;
     let data = rest;
 
     if (oldPassword && newPassword) {
-      const isPasswordValid = await Bcrypt.comparePassword(oldPassword, artist.password);
-
-      if (!isPasswordValid) {
-        return NextResponse.json({ message: 'Old password is incorrect' }, { status: 400 });
-      }
-
-      const newHashedPassword = await Bcrypt.hashPassword(newPassword);
-
-      data = { password: newHashedPassword }
+      data = await handlePasswordUpdate(oldPassword, newPassword, artist.password);
     }
 
     const updatedArtist = await prisma.artist.update({
@@ -41,6 +51,6 @@ export const PUT = async (req: Request, { params }: RouteParams) => {
     return NextResponse.json({ data: updatedArtist });
   } catch (e) {
     console.error("update error", e);
-    return NextResponse.json({ message: 'Artist update failed' }, { status: 500 });
+    return handleApiError(e);
   }
 }

@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 
 import prisma from "@/app/libs/prisma";
+import { handleApiError } from "@/app/libs/utils";
+import { validateSubjectBodyAsync } from "../subjects/validations";
 
 export async function GET() {
   try {
@@ -17,13 +19,16 @@ export async function GET() {
     return NextResponse.json({ list: materials });
   } catch (e) {
     console.error("get materials error", e);
-    return NextResponse.json({ message: "Get materials failed" }, { status: 500 });
+    return handleApiError(e);
   }
 }
 
 export async function POST(req: Request) {
   try {
-    const { name } = await req.json();
+    const body = await req.json();
+    await validateSubjectBodyAsync(body);
+
+    const { name } = body;
 
     const material = await prisma.material.create({
       data: { name },
@@ -32,6 +37,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ data: material });
   } catch (e) {
     console.error("create material error", e);
-    return NextResponse.json({ message: "Create material failed" }, { status: 500 });
+    return handleApiError(e);
   }
 }

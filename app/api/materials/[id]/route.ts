@@ -1,53 +1,52 @@
 import prisma from '@/app/libs/prisma';
 import { NextResponse } from 'next/server';
 import { RouteParams } from '@/app/api/types';
+import { validateIdParamExistsAsync } from '@/app/libs/validations';
+import { validateSubjectBodyAsync } from '../../subjects/validations';
+import { handleApiError, verifyEntityExists } from '@/app/libs/utils';
 
 
 export const PUT = async (req: Request, { params }: RouteParams) => {
   try {
-    const { id } = await params;
+    const routeParams = await params;
+    await validateIdParamExistsAsync(routeParams);
 
-    if (!id) {
-      return NextResponse.json({ message: 'id required' }, { status: 400 });
-    }
+    const body = await req.json();
+    await validateSubjectBodyAsync(body);
 
-    const isMaterialExist = await prisma.material.findUnique({ where: { id } });
+    const { id } = routeParams;
+    const { name } = body;
 
-    if (!isMaterialExist) {
-      return NextResponse.json({ message: 'Material not found' }, { status: 404 });
-    }
+    await verifyEntityExists("material", id);
 
-    const { name } = await req.json();
+    // TODO: check has duplicate & diff id
 
     const material = await prisma.material.update({ where: { id }, data: { name } });
 
     return NextResponse.json({ data: material });
   } catch (e) {
     console.error("update error", e);
-    return NextResponse.json({ message: 'Material update failed' }, { status: 500 });
+    return handleApiError(e);
   }
 }
 
 
 export const DELETE = async (req: Request, { params }: RouteParams) => {
   try {
-    const { id } = await params;
+    const routeParams = await params;
+    await validateIdParamExistsAsync(routeParams);
 
-    if (!id) {
-      return NextResponse.json({ message: 'id required' }, { status: 400 });
-    }
+    const { id } = routeParams;
 
-    const isMaterialExist = await prisma.material.findUnique({ where: { id } });
+    await verifyEntityExists("material", id);
 
-    if (!isMaterialExist) {
-      return NextResponse.json({ message: 'Material not found' }, { status: 404 });
-    }
+    // TODO: check has relative artwork
 
     await prisma.material.delete({ where: { id } });
 
     return NextResponse.json({ status: 204 });
   } catch (e) {
-    console.error("delete error", e);
-    return NextResponse.json({ message: 'Material delete failed' }, { status: 500 });
+    console.error("delete error", e); return handleApiError(e);
+    return handleApiError(e);
   }
 }

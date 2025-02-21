@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
-
 import prisma from "@/app/libs/prisma";
+import { handleApiError } from "@/app/libs/utils";
+import { validateSubjectBodyAsync } from "./validations";
+
 
 export async function GET() {
   try {
@@ -17,21 +19,26 @@ export async function GET() {
     return NextResponse.json({ list: subjects });
   } catch (e) {
     console.log("get subjects error", e);
-    return NextResponse.json({ message: "Get subjuects failed" }, { status: 500 })
+    return handleApiError(e);
   }
 }
 
 export async function POST(req: Request) {
   try {
-    const { name } = await req.json();
+    const body = await req.json();
+    await validateSubjectBodyAsync(body);
+
+    const { name } = body;
+
+    // TODO: check duplicate name;
 
     const subject = await prisma.subject.create({
-      data: { name },
+      data: { name }
     });
 
     return NextResponse.json({ data: subject });
   } catch (e) {
     console.error("create subject error", e);
-    return NextResponse.json({ message: "Create subject failed" }, { status: 500 });
+    return handleApiError(e);
   }
 }

@@ -1,53 +1,51 @@
 import prisma from '@/app/libs/prisma';
 import { NextResponse } from 'next/server';
 import { RouteParams } from '@/app/api/types';
+import { handleApiError, verifyEntityExists } from '@/app/libs/utils';
+import { validateIdParamExistsAsync } from '@/app/libs/validations';
+import { validateSubjectBodyAsync } from '../validations';
 
 
 export const PUT = async (req: Request, { params }: RouteParams) => {
   try {
-    const { id } = await params;
+    const routeParams = await params;
+    await validateIdParamExistsAsync(routeParams);
 
-    if (!id) {
-      return NextResponse.json({ message: 'id required' }, { status: 400 });
-    }
+    const body = await req.json();
+    await validateSubjectBodyAsync(body);
 
-    const isSubjectExist = await prisma.subject.findUnique({ where: { id } });
+    const { id } = routeParams;
+    const { name } = body;
 
-    if (!isSubjectExist) {
-      return NextResponse.json({ message: 'Subject not found' }, { status: 404 });
-    }
+    await verifyEntityExists("subject", id);
 
-    const { name } = await req.json();
+    // TODO: check has duplicate & diff id
 
     const subject = await prisma.subject.update({ where: { id }, data: { name } });
 
     return NextResponse.json({ data: subject });
   } catch (e) {
     console.error("update error", e);
-    return NextResponse.json({ message: 'Subject update failed' }, { status: 500 });
+    return handleApiError(e);
   }
 }
 
 
 export const DELETE = async (req: Request, { params }: RouteParams) => {
   try {
-    const { id } = await params;
+    const routeParams = await params;
+    await validateIdParamExistsAsync(routeParams);
 
-    if (!id) {
-      return NextResponse.json({ message: 'id required' }, { status: 400 });
-    }
+    const { id } = routeParams;
+    await verifyEntityExists("subject", id);
 
-    const isSubjectExist = await prisma.subject.findUnique({ where: { id } });
-
-    if (!isSubjectExist) {
-      return NextResponse.json({ message: 'Subject not found' }, { status: 404 });
-    }
+    // TODO: check has relative artwork
 
     await prisma.subject.delete({ where: { id } });
 
     return NextResponse.json({ status: 204 });
   } catch (e) {
     console.error("delete error", e);
-    return NextResponse.json({ message: 'Subject delete failed' }, { status: 500 });
+    return handleApiError(e);
   }
 }
