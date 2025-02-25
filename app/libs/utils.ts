@@ -4,12 +4,14 @@ import { NextResponse } from 'next/server';
 import * as yup from "yup";
 import { BadRequestError, ForbiddenError, NotFoundError } from "./errors";
 
-export const formDateTimeToString = (date?: Date): string => {
+export const formDateTimeToString = (date?: Date, options?: { format?: string }): string => {
+  const { format = "YYYY-MM-DD HH:mm" } = options ?? {};
+
   if (!date) {
     return "";
   }
 
-  return dayjs(date).format("YYYY-MM-DD HH:mm");
+  return dayjs(date).format(format);
 };
 
 

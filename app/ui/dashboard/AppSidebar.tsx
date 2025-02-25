@@ -40,26 +40,31 @@ const menuItems = [
   {
     title: "Artist",
     url: "/dashboard/artists",
+    basePath: "/dashboard/artists",
     icon: User,
   },
   {
     title: "Materials",
     url: "/dashboard/materials",
+    basePath: "/dashboard/materials",
     icon: PaintBucket,
   },
   {
     title: "Subjects",
     url: "/dashboard/subjects",
+    basePath: "/dashboard/subjects",
     icon: Group,
   },
   {
     title: "Artworks",
     url: "/dashboard/artworks",
+    basePath: "/dashboard/artworks",
     icon: Image,
   },
   {
     title: "Achievements",
     url: "/dashboard/achievements",
+    basePath: "/dashboard/achievements",
     icon: Award,
   },
 ];
@@ -108,7 +113,10 @@ const AppSidebar = () => {
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={pathname === item.url}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname?.startsWith(item.basePath)}
+                  >
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
