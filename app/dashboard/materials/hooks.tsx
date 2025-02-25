@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import useAppQuery from "@/app/libs/hooks/useAppQuery";
 import useAppMutation from "@/app/libs/hooks/useAppMutation";
 import { Material } from "./types";
+import { Option } from "../types";
 
 const QUERY_KEY = "materials";
 
@@ -12,6 +13,18 @@ export const useMaterials = () => {
     queryKey: [QUERY_KEY],
     url: "/api/materials/",
   });
+};
+
+export const useMaterialOptions = () => {
+  const { isLoading, data } = useMaterials();
+
+  const options: Option[] =
+    data?.list.map((material) => ({
+      label: material.name,
+      value: material.id,
+    })) || [];
+
+  return { isLoading, options };
 };
 
 export const useCreateMaterial = () => {

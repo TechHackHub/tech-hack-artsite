@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import useAppQuery from "@/app/libs/hooks/useAppQuery";
 import useAppMutation from "@/app/libs/hooks/useAppMutation";
 import { Subject } from "./types";
+import { Option } from "../types";
 
 const QUERY_KEY = "subjects";
 
@@ -12,6 +13,18 @@ export const useSubjects = () => {
     queryKey: [QUERY_KEY],
     url: "/api/subjects/",
   });
+};
+
+export const useSubjectOptions = () => {
+  const { isLoading, data } = useSubjects();
+
+  const options: Option[] =
+    data?.list.map((subject) => ({
+      label: subject.name,
+      value: subject.id,
+    })) || [];
+
+  return { isLoading, options };
 };
 
 export const useCreateSubject = () => {
