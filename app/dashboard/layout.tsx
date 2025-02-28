@@ -25,7 +25,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (status !== "authenticated") {
-      router.replace("/login");
+      const callbackUrl = encodeURIComponent(window.location.pathname);
+      router.replace(`/login?callbackUrl=${callbackUrl}`);
     }
   }, [status, router]);
 

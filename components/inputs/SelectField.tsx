@@ -19,12 +19,13 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Loader2 } from "lucide-react";
+import { Option } from "@/app/dashboard/types";
 
 type SelectFieldProps = InputProps &
   SelectHTMLAttributes<HTMLSelectElement> & {
     loading?: boolean;
     placeholder?: string;
-    options: { label: string; value: string }[];
+    options: Option[];
   };
 
 const SelectField: React.FC<SelectFieldProps> = ({
@@ -42,7 +43,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="flex flex-col gap-1 w-full">
           {label && <FormLabel>{label}</FormLabel>}
 
           <Select onValueChange={field.onChange} defaultValue={field.value}>

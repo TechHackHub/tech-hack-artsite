@@ -23,7 +23,6 @@ type MultiSelectFieldProps = InputProps &
 const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
   label,
   name,
-  loading,
   placeholder = "Select an option",
   options,
   description,
@@ -35,7 +34,7 @@ const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-col gap-1">
+        <FormItem className="flex flex-col gap-1 w-full">
           {label && <FormLabel>{label}</FormLabel>}
 
           <FormControl>
