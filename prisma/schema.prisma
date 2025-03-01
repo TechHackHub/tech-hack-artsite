@@ -7,6 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Image {
+  id               String  @id @default(uuid())
+  url              String // Cloudinary secure_url
+  publicId         String // Cloudinary public_id (essential for deletion)
+  width            Int?
+  height           Int?
+  format           String?
+  originalFilename String?
+  artworkId        String
+  artwork          Artwork @relation(fields: [artworkId], references: [id], onDelete: Cascade)
+
+  @@index([artworkId])
+}
+
 model Artist {
   id          String   @id @default(uuid())
   avatar      String
@@ -36,7 +50,7 @@ model Subject {
   name      String    @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Artwork   Artwork[]
+  artwork   Artwork[]
 }
 
 model Artwork {
@@ -44,17 +58,18 @@ model Artwork {
   title          String
   materials      Material[]
   subject        Subject?   @relation(fields: [subjectId], references: [id], onDelete: Restrict)
-  images         String[]
+  images         Image[]
   width          Float
   height         Float
   depth          Float
   description    String     @default("")
   completedAt    DateTime
   publish        Boolean
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
   subjectId      String?
   showOnCarousel Boolean    @default(false)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  deletedAt      DateTime?
 }
 
 model Achievement {
@@ -68,6 +83,7 @@ model Achievement {
   publish      Boolean
   createdAt    DateTime                @default(now())
   updatedAt    DateTime                @updatedAt
+  deletedAt    DateTime?
 }
 
 enum AchievementCategory {
