@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { v2 as cloudinary, UploadApiErrorResponse, UploadApiOptions, UploadApiResponse } from 'cloudinary';
+import { UploadResult } from '../types';
 
 const config = {
   cloud_name: process.env.FILE_STORAGE_NAME,
@@ -26,7 +27,6 @@ const uploadToCloud = async (file: File) => {
         format: file.name.split('.').pop(),
         use_filename: true,
         unique_filename: true,
-        public_id: 'hlllelwwewlewellewlew'
       },
       (error, result) => {
         if (error) reject(error);
@@ -43,14 +43,9 @@ const deleteFromCloud = async (id: string) => {
   return result;
 }
 
-// export const GET - async (req: Request) => {
-
-// }
-
 export const POST = async (req: Request) => {
   try {
     const formData = await req.formData();
-
     const file = formData.get('file') as File;
 
     if (!file) {
@@ -62,15 +57,18 @@ export const POST = async (req: Request) => {
 
     const result = await uploadToCloud(file);
 
-    return NextResponse.json({
-      publicId: result?.public_id ?? '', // TODO hash public id
-      filename: result?.original_filename ?? '',
-      format: result?.format ?? '',
-      type: result?.resource_type ?? '',
-      url: result?.secure_url ?? ''
-    });
+    const uploadedFile: UploadResult = {
+      url: result?.secure_url,
+      publicId: result?.public_id,
+      originalFilename: result?.original_filename,
+      format: result?.format,
+      width: result?.width,
+      height: result?.height,
+    }
+
+    return NextResponse.json(uploadedFile, { status: 201 });
   } catch (e) {
-    console.error("upload error,,,,,,,,", e);
+    console.error("upload error", e);
     return NextResponse.json({ message: 'File upload failed' }, { status: 500 });
   }
 }

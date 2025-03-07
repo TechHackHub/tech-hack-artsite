@@ -10,18 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import TextareaField from "@/components/inputs/TextareaField";
 import AvatarUploadField from "@/components/inputs/AvatarUploadField";
 import { Artist, UpdateArtist } from "@/app/dashboard/artists/types";
-
-const InnerCard: React.FC<{ title: string; children: React.ReactNode }> = ({
-  title,
-  children,
-}) => (
-  <Card className="border-none shadow-none">
-    <CardHeader className="px-0">
-      <CardTitle>{title}</CardTitle>
-    </CardHeader>
-    <CardContent className="space-y-3 px-0">{children}</CardContent>
-  </Card>
-);
+import AppCard from "@/components/AppCard";
 
 const schema = yup.object().shape({
   avatar: yup.string().default(""),
@@ -89,7 +78,7 @@ const ArtistForm: React.FC<Props> = ({ isLoading, artist, onSubmit }) => {
             <AvatarUploadField name="avatar" />
 
             <div className="flex-1 ">
-              <InnerCard title="About">
+              <AppCard title="About">
                 <TextField
                   label="Name"
                   name="name"
@@ -121,9 +110,9 @@ const ArtistForm: React.FC<Props> = ({ isLoading, artist, onSubmit }) => {
                   placeholder="Ex: Hello, my name is..."
                   rows={5}
                 />
-              </InnerCard>
+              </AppCard>
 
-              <InnerCard title="Contact">
+              <AppCard title="Contact">
                 <TextField
                   label="Email"
                   name="email"
@@ -134,9 +123,9 @@ const ArtistForm: React.FC<Props> = ({ isLoading, artist, onSubmit }) => {
                   name="phone"
                   placeholder="Ex: 0912345678"
                 />
-              </InnerCard>
+              </AppCard>
 
-              <InnerCard title="Socials">
+              <AppCard title="Socials">
                 <TextField
                   label="Facebook"
                   name="facebookUrl"
@@ -147,7 +136,7 @@ const ArtistForm: React.FC<Props> = ({ isLoading, artist, onSubmit }) => {
                   name="IGUrl"
                   placeholder="Ex: https://www.IG.com"
                 />
-              </InnerCard>
+              </AppCard>
             </div>
 
             <Button
