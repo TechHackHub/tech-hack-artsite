@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import AppSidebar from "@/app/ui/dashboard/AppSidebar";
+import AppSidebar from "@/components/AppSidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,

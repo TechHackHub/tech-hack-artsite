@@ -77,7 +77,7 @@ const ArtistForm: React.FC<Props> = ({ isLoading, artist, onSubmit }) => {
           >
             <AvatarUploadField name="avatar" />
 
-            <div className="flex-1 ">
+            <div className="flex-1 flex flex-col gap-4">
               <AppCard title="About">
                 <TextField
                   label="Name"

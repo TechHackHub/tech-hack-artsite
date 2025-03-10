@@ -5,7 +5,7 @@ import ArtistForm from "./components/ArtistForm";
 import PasswordChangeForm, {
   PasswordChangeFormType,
 } from "./components/PasswordChangeForm";
-import Loader from "@/app/ui/dashboard/Loader";
+import Loader from "@/components/Loader";
 import { useArtist, useUpdateArtist } from "./hooks";
 import TransitionPage from "@/components/TransitionPage";
 import { UpdateArtist } from "./types";

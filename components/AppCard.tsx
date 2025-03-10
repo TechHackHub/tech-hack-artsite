@@ -6,10 +6,10 @@ type AppCardProps = { title: string; children: React.ReactNode };
 const AppCard: React.FC<AppCardProps> = ({ title, children }) => {
   return (
     <Card>
-      <CardHeader className="px-0">
+      <CardHeader className="px-6">
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3 px-0">{children}</CardContent>
+      <CardContent className="space-y-3 px-6">{children}</CardContent>
     </Card>
   );
 };

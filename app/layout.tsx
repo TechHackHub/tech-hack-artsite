@@ -1,7 +1,7 @@
 "use client";
 
-import "./ui/globals.css";
-import { inter } from "@/app/ui/fonts";
+import "./globals.css";
+import { inter } from "@/app/fonts";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/sonner";
 
