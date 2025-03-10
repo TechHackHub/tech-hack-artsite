@@ -11,8 +11,9 @@ import { Artwork } from "./types";
 import { formDateTimeToString } from "@/app/libs/utils";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import TableActionCell from "@/components/TableActionCell";
 
-const ArtworkPage = () => {
+const ArtworkListPage = () => {
   const router = useRouter();
 
   const { isLoading, data } = useArtworks();
@@ -67,19 +68,21 @@ const ArtworkPage = () => {
       header: "Updated at",
       cell: (row) => formDateTimeToString(row?.row?.original?.updatedAt),
     },
-    // {
-    //   id: "action",
-    //   cell: (row) => {
-    //     return (
-    //       <TableActionCell
-    //         isUpdating={isUpdating}
-    //         isDeleting={isDeleting}
-    //         onEdit={() => handleEditClick(row.row.original)}
-    //         onDelete={async () => handleDeleteClick(row.row.original.id)}
-    //       />
-    //     );
-    //   },
-    // },
+    {
+      id: "action",
+      cell: (row) => {
+        return (
+          <TableActionCell
+            // isUpdating={isUpdating}
+            // isDeleting={isDeleting}
+            onEdit={() =>
+              router.push(`/dashboard/artworks/${row?.row?.original?.id}`)
+            }
+            // onDelete={async () => handleDeleteClick(row.row.original.id)}
+          />
+        );
+      },
+    },
   ];
 
   return (
@@ -99,4 +102,4 @@ const ArtworkPage = () => {
   );
 };
 
-export default ArtworkPage;
+export default ArtworkListPage;

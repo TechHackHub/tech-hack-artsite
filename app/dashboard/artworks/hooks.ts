@@ -8,6 +8,14 @@ import { ArtworkFormType } from "@/app/api/artworks/validations";
 
 const QUERY_KEY = "artworks";
 
+export const useArtwork = (id: string) => {
+  return useAppQuery<Artwork>({
+    queryKey: [QUERY_KEY, id],
+    url: `/api/artworks/${id}`,
+  });
+}
+
+
 export const useArtworks = () => {
   return useAppQuery<{ list: Artwork[] }>({
     queryKey: [QUERY_KEY],
@@ -25,3 +33,25 @@ export const useCreateArtwork = () => {
     },
   });
 };
+
+export const useUpdateArtwork = () => {
+  return useAppMutation<Artwork, ArtworkFormType, { id: string }>({
+    method: "PUT",
+    url: ({ id }) => `/api/artworks/${id}`,
+    invalidateQueries: [QUERY_KEY],
+    onSuccess: () => {
+      toast.error("Artwork updated");
+    },
+  });
+}
+
+export const useDeleteArtwork = () => {
+  return useAppMutation<Artwork, void, { id: string }>({
+    method: "DELETE",
+    url: ({ id }) => `/api/artworks/${id}`,
+    invalidateQueries: [QUERY_KEY],
+    onSuccess: () => {
+      toast.error("Artwork deleted");
+    },
+  });
+}

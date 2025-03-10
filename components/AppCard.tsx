@@ -5,7 +5,7 @@ type AppCardProps = { title: string; children: React.ReactNode };
 
 const AppCard: React.FC<AppCardProps> = ({ title, children }) => {
   return (
-    <Card className="border-none shadow-none">
+    <Card>
       <CardHeader className="px-0">
         <CardTitle>{title}</CardTitle>
       </CardHeader>
