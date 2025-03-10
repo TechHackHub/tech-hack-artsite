@@ -1,7 +1,8 @@
-import { AchievementCategory, AchievementSubcategory, PrismaClient } from '@prisma/client'
-import { randomUUID } from 'crypto'
+import { AchievementCategory, AchievementSubcategory, PrismaClient } from '@prisma/client';
+import Bcrypt from "../app/libs/bcrypt";
 
 const prisma = new PrismaClient()
+
 
 async function main() {
   // Create initial artist
@@ -15,36 +16,12 @@ async function main() {
       educations: ["Master"],
       description: "hello world",
       email: "stark@mail.com",
-      password: "test123",
+      password: await Bcrypt.hashPassword("test123"),
       phone: "",
       facebookUrl: "",
       IGUrl: "",
     },
   });
-
-  const artworks = Array.from({ length: 10 }).map((_, index) => ({
-    id: randomUUID(),
-    title: `Artwork ${index + 1}`,
-    width: Math.random() * 100 + 50,
-    height: Math.random() * 100 + 50,
-    depth: Math.random() * 20 + 5,
-    description: `This is a description for artwork ${index + 1}`,
-    completedAt: new Date(2023, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)), // Random date in 2023
-    publish: Math.random() > 0.3,
-    showOnCarousel: Math.random() > 0.7,
-    materials: {
-      create: [
-        { name: 'Oil Paint' },
-        { name: 'Canvas' }
-      ]
-    }
-  }));
-
-  for (const artwork of artworks) {
-    await prisma.artwork.create({
-      data: artwork
-    })
-  }
 
   // Seed Materials
   const materials = [

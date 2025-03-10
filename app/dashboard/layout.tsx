@@ -1,21 +1,61 @@
 "use client";
-import SideNav from "@/app/ui/dashboard/sidenav";
-import createApolloClient from "../libs/apollo-client";
-import { ApolloProvider } from "@apollo/client";
 
-const client = createApolloClient();
+import { useEffect } from "react";
+import AppSidebar from "@/components/AppSidebar";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status !== "authenticated") {
+      const callbackUrl = encodeURIComponent(window.location.pathname);
+      router.replace(`/login?callbackUrl=${callbackUrl}`);
+    }
+  }, [status, router]);
+
   return (
-    <ApolloProvider client={client}>
-      <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-        <div className="w-full flex-none md:w-64">
-          <SideNav />
-        </div>
-        <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
-          {children}
-        </div>
-      </div>
-    </ApolloProvider>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 h-4" />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">
+                    Building Your Application
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+        </header>
+
+        <div className="container mx-auto p-4">{children}</div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
