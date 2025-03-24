@@ -1,8 +1,11 @@
-import { AchievementCategory, AchievementSubcategory, PrismaClient } from '@prisma/client';
-import Bcrypt from "../app/libs/bcrypt";
+import {
+  AchievementCategory,
+  AchievementSubcategory,
+  PrismaClient,
+} from '@prisma/client';
+import Bcrypt from '../app/libs/bcrypt';
 
-const prisma = new PrismaClient()
-
+const prisma = new PrismaClient();
 
 async function main() {
   // Create initial artist
@@ -10,16 +13,16 @@ async function main() {
     where: { email: 'stark@mail.com' },
     update: {},
     create: {
-      avatar: "http://localhost:3000/url",
-      name: "StarkLin",
-      born: "1996, Taiwan",
-      educations: ["Master"],
-      description: "hello world",
-      email: "stark@mail.com",
-      password: await Bcrypt.hashPassword("test123"),
-      phone: "",
-      facebookUrl: "",
-      IGUrl: "",
+      avatar: 'http://localhost:3000/url',
+      name: 'StarkLin',
+      born: '1996, Taiwan',
+      educations: ['Master'],
+      description: 'hello world',
+      email: 'stark@mail.com',
+      password: await Bcrypt.hashPassword('test123'),
+      phone: '',
+      facebookUrl: '',
+      IGUrl: '',
     },
   });
 
@@ -34,8 +37,8 @@ async function main() {
     { name: 'Bronze' },
     { name: 'Marble' },
     { name: 'Clay' },
-    { name: 'Mixed Media' }
-  ]
+    { name: 'Mixed Media' },
+  ];
 
   // Seed Subjects
   const subjects = [
@@ -46,8 +49,8 @@ async function main() {
     { name: 'Figure' },
     { name: 'Nature' },
     { name: 'Urban' },
-    { name: 'Conceptual' }
-  ]
+    { name: 'Conceptual' },
+  ];
 
   // Seed Achievements
   const achievements = [
@@ -58,7 +61,7 @@ async function main() {
       subcategory: AchievementSubcategory.Solo,
       organization: 'Modern Art Gallery',
       location: 'New York, NY',
-      publish: true
+      publish: true,
     },
     {
       title: 'Annual Art Prize Winner',
@@ -66,7 +69,7 @@ async function main() {
       category: AchievementCategory.Award,
       organization: 'National Art Foundation',
       location: 'Chicago, IL',
-      publish: true
+      publish: true,
     },
     {
       title: 'Group Exhibition: New Perspectives',
@@ -75,7 +78,7 @@ async function main() {
       subcategory: AchievementSubcategory.Group,
       organization: 'Contemporary Arts Museum',
       location: 'Los Angeles, CA',
-      publish: true
+      publish: true,
     },
     {
       title: 'Permanent Collection Acquisition',
@@ -83,17 +86,17 @@ async function main() {
       category: AchievementCategory.Collection,
       organization: 'Metropolitan Museum of Art',
       location: 'New York, NY',
-      publish: true
-    }
-  ]
+      publish: true,
+    },
+  ];
 
   // Insert Materials
   for (const material of materials) {
     await prisma.material.upsert({
       where: { name: material.name },
       update: material,
-      create: material
-    })
+      create: material,
+    });
   }
 
   // Insert Subjects
@@ -101,24 +104,24 @@ async function main() {
     await prisma.subject.upsert({
       where: { name: subject.name },
       update: subject,
-      create: subject
-    })
+      create: subject,
+    });
   }
 
   // Insert Achievements
   for (const achievement of achievements) {
     await prisma.achievement.create({
-      data: achievement
-    })
+      data: achievement,
+    });
   }
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import TransitionPage from "@/components/TransitionPage";
-import React from "react";
-import { useArtwork } from "../hooks";
-import { notFound } from "next/navigation";
-import { useParams } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import TransitionPage from '@/components/TransitionPage';
+import React from 'react';
+import { useArtwork } from '../hooks';
+import { notFound } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const ArtworkPage: React.FC = () => {
   const { id } = useParams();
@@ -21,7 +21,7 @@ const ArtworkPage: React.FC = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-xl">
-              {artwork?.title ?? "Artwork"}
+              {artwork?.title ?? 'Artwork'}
             </CardTitle>
           </CardHeader>
 

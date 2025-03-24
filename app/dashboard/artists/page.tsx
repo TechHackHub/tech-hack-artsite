@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import React from "react";
-import ArtistForm from "./components/ArtistForm";
+import React from 'react';
+import ArtistForm from './components/ArtistForm';
 import PasswordChangeForm, {
   PasswordChangeFormType,
-} from "./components/PasswordChangeForm";
-import Loader from "@/components/Loader";
-import { useArtist, useUpdateArtist } from "./hooks";
-import TransitionPage from "@/components/TransitionPage";
-import { UpdateArtist } from "./types";
+} from './components/PasswordChangeForm';
+import Loader from '@/components/Loader';
+import { useArtist, useUpdateArtist } from './hooks';
+import TransitionPage from '@/components/TransitionPage';
+import { UpdateArtist } from './types';
 
 const ArtistPage = () => {
   const { isLoading, data: artist } = useArtist();
   const { isLoading: isUpdating, update, updatePassword } = useUpdateArtist();
 
   const handleUpdateSubmit = async (
-    formData: Omit<UpdateArtist, "oldPassword" | "newPassword">
+    formData: Omit<UpdateArtist, 'oldPassword' | 'newPassword'>,
   ) => {
     if (!artist?.id) return;
 
@@ -23,7 +23,7 @@ const ArtistPage = () => {
   };
 
   const handlePasswordChangeSubmit = async (
-    formData: PasswordChangeFormType
+    formData: PasswordChangeFormType,
   ): Promise<boolean> => {
     try {
       if (!artist?.id) return false;
@@ -31,7 +31,7 @@ const ArtistPage = () => {
       await updatePassword(
         artist.id,
         formData.oldpassword,
-        formData.newpassword
+        formData.newpassword,
       );
 
       return true;

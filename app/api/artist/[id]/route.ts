@@ -10,9 +10,12 @@ import { BadRequestError } from '@/app/libs/errors';
 const handlePasswordUpdate = async (
   oldPassword: string,
   newPassword: string,
-  currentPassword: string
+  currentPassword: string,
 ): Promise<{ password: string } | null> => {
-  const isPasswordValid = await Bcrypt.comparePassword(oldPassword, currentPassword);
+  const isPasswordValid = await Bcrypt.comparePassword(
+    oldPassword,
+    currentPassword,
+  );
 
   if (!isPasswordValid) {
     throw new BadRequestError('Old password is incorrect');
@@ -20,8 +23,7 @@ const handlePasswordUpdate = async (
 
   const newHashedPassword = await Bcrypt.hashPassword(newPassword);
   return { password: newHashedPassword };
-}
-
+};
 
 export const PUT = async (req: Request, { params }: RouteParams) => {
   try {
@@ -32,7 +34,7 @@ export const PUT = async (req: Request, { params }: RouteParams) => {
     await validateSubjectBodyAsync(body);
 
     const { id } = routeParams;
-    await verifyEntityExists("artist", id);
+    await verifyEntityExists('artist', id);
 
     const artist = await prisma.artist.findUniqueOrThrow({ where: { id } });
 
@@ -40,17 +42,21 @@ export const PUT = async (req: Request, { params }: RouteParams) => {
     let data = rest;
 
     if (oldPassword && newPassword) {
-      data = await handlePasswordUpdate(oldPassword, newPassword, artist.password);
+      data = await handlePasswordUpdate(
+        oldPassword,
+        newPassword,
+        artist.password,
+      );
     }
 
     const updatedArtist = await prisma.artist.update({
       where: { id },
-      data
+      data,
     });
 
     return NextResponse.json({ data: updatedArtist });
   } catch (e) {
-    console.error("update error", e);
+    console.error('update error', e);
     return handleApiError(e);
   }
-}
+};

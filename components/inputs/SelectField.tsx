@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { SelectHTMLAttributes } from "react";
+import React, { SelectHTMLAttributes } from 'react';
 import {
   FormControl,
   FormDescription,
@@ -8,18 +8,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { useFormContext } from "react-hook-form";
-import { InputProps } from "./types";
+} from '../ui/form';
+import { useFormContext } from 'react-hook-form';
+import { InputProps } from './types';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
-import { Loader2 } from "lucide-react";
-import { Option } from "@/app/dashboard/types";
+} from '../ui/select';
+import { Loader2 } from 'lucide-react';
+import { Option } from '@/app/dashboard/types';
 
 type SelectFieldProps = InputProps &
   SelectHTMLAttributes<HTMLSelectElement> & {
@@ -32,7 +32,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
   label,
   name,
   loading,
-  placeholder = "Select an option",
+  placeholder = 'Select an option',
   options = [],
   description,
 }) => {

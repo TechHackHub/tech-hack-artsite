@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useCreateArtwork } from "../hooks";
-import TransitionPage from "@/components/TransitionPage";
-import ArtworkForm from "../components/ArtworkForm";
-import { ArtworkFormType } from "@/app/api/artworks/validations";
-import { useRouter } from "next/navigation";
+import React from 'react';
+import { useCreateArtwork } from '../hooks';
+import TransitionPage from '@/components/TransitionPage';
+import ArtworkForm from '../components/ArtworkForm';
+import { ArtworkFormType } from '@/app/api/artworks/validations';
+import { useRouter } from 'next/navigation';
 
 const ArtworkCreatePage: React.FC = () => {
   const router = useRouter();
@@ -15,7 +15,7 @@ const ArtworkCreatePage: React.FC = () => {
     const data = await createArtworkAsync({ data: formData });
 
     if (data) {
-      router.push("/dashboard/artworks");
+      router.push('/dashboard/artworks');
     }
   };
 

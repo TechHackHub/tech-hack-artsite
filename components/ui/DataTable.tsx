@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 
 import {
   ColumnDef,
@@ -8,7 +8,7 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 import {
   Table,
   TableBody,
@@ -16,9 +16,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./table";
-import { Button } from "./button";
-import { Skeleton } from "./skeleton";
+} from './table';
+import { Button } from './button';
+import { Skeleton } from './skeleton';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface DataTableProps<TData = any, TValue = any> {
@@ -36,7 +36,7 @@ const DataTable = <TData, TValue>({
 }: DataTableProps<TData, TValue>) => {
   const tableData = useMemo(
     () => (loading ? Array(5).fill({}) : data),
-    [loading, data]
+    [loading, data],
   );
 
   const tableColumns = useMemo(
@@ -47,7 +47,7 @@ const DataTable = <TData, TValue>({
             cell: <Skeleton className="h-4" />,
           }))
         : columns,
-    [loading, columns]
+    [loading, columns],
   ) as ColumnDef<TData, TValue>[];
 
   const table = useReactTable({
@@ -67,9 +67,7 @@ const DataTable = <TData, TValue>({
     <div className="flex flex-col gap-2">
       {/* toolbar */}
       <div className="flex justify-end gap-2 py-4">
-        {toolbars?.map((toolbar, index) => (
-          <div key={index}>{toolbar}</div>
-        ))}
+        {toolbars?.map((toolbar, index) => <div key={index}>{toolbar}</div>)}
       </div>
 
       {/* table */}
@@ -85,7 +83,7 @@ const DataTable = <TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -99,13 +97,13 @@ const DataTable = <TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

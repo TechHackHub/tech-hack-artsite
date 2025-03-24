@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -8,8 +8,8 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogCancel,
-} from "./ui/alert-dialog";
-import { Button } from "./ui/button";
+} from './ui/alert-dialog';
+import { Button } from './ui/button';
 
 type DeleteConfirmButtonProps = {
   loading?: boolean;
@@ -25,7 +25,7 @@ const DeleteConfirmButton: React.FC<DeleteConfirmButtonProps> = ({
   trigger,
   title,
   description,
-  confirmText = "Confirm",
+  confirmText = 'Confirm',
   onConfirm,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,11 +44,11 @@ const DeleteConfirmButton: React.FC<DeleteConfirmButtonProps> = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {title || "Are you sure to delete?"}
+            {title || 'Are you sure to delete?'}
           </AlertDialogTitle>
           <AlertDialogDescription>
             {description ||
-              "This action cannot be undone. This will permanently delete the item."}
+              'This action cannot be undone. This will permanently delete the item.'}
           </AlertDialogDescription>
         </AlertDialogHeader>
 

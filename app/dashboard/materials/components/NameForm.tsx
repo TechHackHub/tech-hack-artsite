@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
-import * as yup from "yup";
+import React, { useEffect } from 'react';
+import * as yup from 'yup';
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 
-import { Form } from "@/components/ui/form";
-import TextField from "@/components/inputs/TextField";
-import { Button } from "@/components/ui/button";
+import { Form } from '@/components/ui/form';
+import TextField from '@/components/inputs/TextField';
+import { Button } from '@/components/ui/button';
 
 const schema = yup.object().shape({
-  name: yup.string().default("").required("Name is required"),
+  name: yup.string().default('').required('Name is required'),
 });
 
 type NameFormType = yup.InferType<typeof schema>;
@@ -30,7 +30,7 @@ const NameForm = <TData,>({
   onSubmit,
 }: NameFormProps<TData>) => {
   const form = useForm<NameFormType>({
-    defaultValues: { name: "" },
+    defaultValues: { name: '' },
     resolver: yupResolver(schema),
   });
 

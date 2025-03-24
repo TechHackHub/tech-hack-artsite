@@ -1,21 +1,21 @@
-import { ArtworkFormType, artworkSchema } from "@/app/api/artworks/validations";
-import TextareaField from "@/components/inputs/TextareaField";
-import TextField from "@/components/inputs/TextField";
-import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useMaterialOptions } from "../../materials/hooks";
-import { useSubjectOptions } from "../../subjects/hooks";
-import MultipleSelector from "@/components/inputs/MultiSelectField";
-import SelectField from "@/components/inputs/SelectField";
-import DatePickerField from "@/components/inputs/DatePickerField";
-import SwitchField from "@/components/inputs/SwitchField";
-import FileUploadField from "@/components/inputs/FileUploadField";
-import Image from "next/image";
-import { UploadResult } from "@/app/api/types";
+import { ArtworkFormType, artworkSchema } from '@/app/api/artworks/validations';
+import TextareaField from '@/components/inputs/TextareaField';
+import TextField from '@/components/inputs/TextField';
+import { Button } from '@/components/ui/button';
+import { Form } from '@/components/ui/form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useMaterialOptions } from '../../materials/hooks';
+import { useSubjectOptions } from '../../subjects/hooks';
+import MultipleSelector from '@/components/inputs/MultiSelectField';
+import SelectField from '@/components/inputs/SelectField';
+import DatePickerField from '@/components/inputs/DatePickerField';
+import SwitchField from '@/components/inputs/SwitchField';
+import FileUploadField from '@/components/inputs/FileUploadField';
+import Image from 'next/image';
+import { UploadResult } from '@/app/api/types';
 
 type ArtworkFormProps = {
   isLoading?: boolean;
@@ -35,10 +35,10 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
 
   const form = useForm<ArtworkFormType>({
     defaultValues: {
-      title: "Artwork02",
+      title: 'Artwork02',
       materialIds: [],
       images: [],
-      description: "",
+      description: '',
       publish: true,
       showOnCarousel: false,
       width: 20,
@@ -64,8 +64,8 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
   };
 
   const handleImageUpload = (file: UploadResult) => {
-    const images = form.getValues("images") ?? [];
-    form.setValue("images", [...images, file], { shouldValidate: true });
+    const images = form.getValues('images') ?? [];
+    form.setValue('images', [...images, file], { shouldValidate: true });
   };
 
   return (
@@ -121,9 +121,9 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
           onUploadSuccess={handleImageUpload}
         />
 
-        {form.watch("images").length > 0 && (
+        {form.watch('images').length > 0 && (
           <div className="flex flex-wrap gap-4">
-            {form.watch("images").map((image, index) => (
+            {form.watch('images').map((image, index) => (
               <Image
                 objectFit="cover"
                 key={index}
@@ -141,7 +141,7 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.push("/dashboard/artworks")}
+            onClick={() => router.push('/dashboard/artworks')}
           >
             Cancel
           </Button>

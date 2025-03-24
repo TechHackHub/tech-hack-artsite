@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "./ui/dialog";
+} from './ui/dialog';
 
 type AppDialogProps = {
   isOpen: boolean;

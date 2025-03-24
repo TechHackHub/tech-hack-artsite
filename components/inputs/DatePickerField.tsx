@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { InputHTMLAttributes } from "react";
-import { useFormContext } from "react-hook-form";
+import React, { InputHTMLAttributes } from 'react';
+import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
   FormDescription,
@@ -9,14 +9,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { InputProps } from "./types";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "../ui/calendar";
-import dayjs from "dayjs";
-import { cn } from "@/lib/utils";
+} from '../ui/form';
+import { InputProps } from './types';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Button } from '../ui/button';
+import { CalendarIcon } from 'lucide-react';
+import { Calendar } from '../ui/calendar';
+import dayjs from 'dayjs';
+import { cn } from '@/lib/utils';
 
 type DatePickerFieldProps = InputProps &
   InputHTMLAttributes<HTMLDataElement> & {
@@ -24,7 +24,7 @@ type DatePickerFieldProps = InputProps &
   };
 
 const DatePickerField: React.FC<DatePickerFieldProps> = ({
-  placeholder = "Pick a date",
+  placeholder = 'Pick a date',
   name,
   label,
   description,
@@ -43,14 +43,14 @@ const DatePickerField: React.FC<DatePickerFieldProps> = ({
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  variant={"outline"}
+                  variant={'outline'}
                   className={cn(
-                    "w-[240px] pl-3 text-left font-normal",
-                    !field.value && "text-muted-foreground"
+                    'w-[240px] pl-3 text-left font-normal',
+                    !field.value && 'text-muted-foreground',
                   )}
                 >
                   {field.value ? (
-                    dayjs(field.value).format("MMMM D, YYYY")
+                    dayjs(field.value).format('MMMM D, YYYY')
                   ) : (
                     <span>{placeholder}</span>
                   )}
@@ -64,7 +64,7 @@ const DatePickerField: React.FC<DatePickerFieldProps> = ({
                 selected={field.value}
                 onSelect={field.onChange}
                 disabled={(date) =>
-                  date > new Date() || date < new Date("1900-01-01")
+                  date > new Date() || date < new Date('1900-01-01')
                 }
                 initialFocus
               />

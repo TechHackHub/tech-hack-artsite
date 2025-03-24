@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import AppSidebar from "@/components/AppSidebar";
+import { useEffect } from 'react';
+import AppSidebar from '@/components/AppSidebar';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,22 +9,22 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
+} from '@/components/ui/breadcrumb';
+import { Separator } from '@/components/ui/separator';
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/sidebar';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (status !== "authenticated") {
+    if (status !== 'authenticated') {
       const callbackUrl = encodeURIComponent(window.location.pathname);
       router.replace(`/login?callbackUrl=${callbackUrl}`);
     }

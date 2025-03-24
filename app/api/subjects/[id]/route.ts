@@ -5,7 +5,6 @@ import { handleApiError, verifyEntityExists } from '@/app/libs/utils';
 import { validateIdParamExistsAsync } from '@/app/libs/validations';
 import { validateSubjectBodyAsync } from '../validations';
 
-
 export const PUT = async (req: Request, { params }: RouteParams) => {
   try {
     const routeParams = await params;
@@ -17,19 +16,21 @@ export const PUT = async (req: Request, { params }: RouteParams) => {
     const { id } = routeParams;
     const { name } = body;
 
-    await verifyEntityExists("subject", id);
+    await verifyEntityExists('subject', id);
 
     // TODO: check has duplicate & diff id
 
-    const subject = await prisma.subject.update({ where: { id }, data: { name } });
+    const subject = await prisma.subject.update({
+      where: { id },
+      data: { name },
+    });
 
     return NextResponse.json({ data: subject });
   } catch (e) {
-    console.error("update error", e);
+    console.error('update error', e);
     return handleApiError(e);
   }
-}
-
+};
 
 export const DELETE = async (req: Request, { params }: RouteParams) => {
   try {
@@ -37,7 +38,7 @@ export const DELETE = async (req: Request, { params }: RouteParams) => {
     await validateIdParamExistsAsync(routeParams);
 
     const { id } = routeParams;
-    await verifyEntityExists("subject", id);
+    await verifyEntityExists('subject', id);
 
     // TODO: check has relative artwork
 
@@ -45,7 +46,7 @@ export const DELETE = async (req: Request, { params }: RouteParams) => {
 
     return NextResponse.json({ status: 204 });
   } catch (e) {
-    console.error("delete error", e);
+    console.error('delete error', e);
     return handleApiError(e);
   }
-}
+};

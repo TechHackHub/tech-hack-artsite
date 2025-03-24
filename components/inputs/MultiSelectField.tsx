@@ -1,5 +1,5 @@
-import React, { SelectHTMLAttributes } from "react";
-import { useFormContext } from "react-hook-form";
+import React, { SelectHTMLAttributes } from 'react';
+import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
   FormDescription,
@@ -7,9 +7,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { InputProps } from "./types";
-import MultiSelect from "../ui/MultiSelect";
+} from '../ui/form';
+import { InputProps } from './types';
+import MultiSelect from '../ui/MultiSelect';
 
 type MultiSelectFieldProps = InputProps &
   SelectHTMLAttributes<HTMLSelectElement> & {
@@ -23,7 +23,7 @@ type MultiSelectFieldProps = InputProps &
 const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
   label,
   name,
-  placeholder = "Select an option",
+  placeholder = 'Select an option',
   options,
   description,
 }) => {

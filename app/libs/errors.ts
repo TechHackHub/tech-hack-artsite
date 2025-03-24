@@ -5,7 +5,6 @@ export class BadRequestError extends Error {
   }
 }
 
-
 export class NotFoundError extends Error {
   constructor(entityName: string) {
     super(`${entityName} not found`);

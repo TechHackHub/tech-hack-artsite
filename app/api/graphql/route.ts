@@ -1,9 +1,9 @@
-import { ApolloServer } from "@apollo/server";
-import { startServerAndCreateNextHandler } from "@as-integrations/next";
-import { NextRequest } from "next/server";
+import { ApolloServer } from '@apollo/server';
+import { startServerAndCreateNextHandler } from '@as-integrations/next';
+import { NextRequest } from 'next/server';
 
-import { schema } from "./schema";
-import { Credential } from "@/app/libs/credential";
+import { schema } from './schema';
+import { Credential } from '@/app/libs/credential';
 
 const server = new ApolloServer({
   schema,
@@ -23,12 +23,11 @@ const handler = startServerAndCreateNextHandler<NextRequest>(server, {
 
       const credential = Credential.verifyJwt(token);
 
-      return { req, res, ...credential }
+      return { req, res, ...credential };
     } catch {
-      return { req, res }
+      return { req, res };
     }
   },
-
 });
 
 export async function GET(request: NextRequest) {
@@ -43,5 +42,5 @@ export const config = {
   api: {
     bodyParser: false,
     sizeLimit: '10mb',
-  }
+  },
 };

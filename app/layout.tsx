@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import "./globals.css";
-import { inter } from "@/app/fonts";
-import { SessionProvider } from "next-auth/react";
-import { Toaster } from "@/components/ui/sonner";
+import './globals.css';
+import { inter } from '@/app/fonts';
+import { SessionProvider } from 'next-auth/react';
+import { Toaster } from '@/components/ui/sonner';
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 

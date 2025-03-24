@@ -1,6 +1,6 @@
-import React, { TextareaHTMLAttributes } from "react";
-import { InputProps } from "@/components/inputs/types";
-import { useFormContext } from "react-hook-form";
+import React, { TextareaHTMLAttributes } from 'react';
+import { InputProps } from '@/components/inputs/types';
+import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
   FormDescription,
@@ -8,8 +8,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
+} from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
 
 type Props = InputProps & TextareaHTMLAttributes<HTMLTextAreaElement>;
 

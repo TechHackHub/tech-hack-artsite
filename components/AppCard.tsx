@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 
 type AppCardProps = { title: string; children: React.ReactNode };
 

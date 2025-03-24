@@ -1,34 +1,34 @@
-"use client";
-import { useEffect, useState } from "react";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+'use client';
+import { useEffect, useState } from 'react';
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const LoginPage = () => {
   const { status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard/artists";
-  const [error, setError] = useState<string>("");
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard/artists';
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    if (status === "authenticated") {
+    if (status === 'authenticated') {
       router.replace(callbackUrl);
     }
   }, [status, router, callbackUrl]);
 
   const handleSubmit = async (formData: FormData) => {
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
 
     try {
-      const result = await signIn("credentials", {
+      const result = await signIn('credentials', {
         email,
         password,
         redirect: false,
       });
 
       if (result?.error) {
-        setError("Invalid credentials");
+        setError('Invalid credentials');
         return;
       }
 
@@ -36,7 +36,7 @@ const LoginPage = () => {
       router.refresh();
     } catch (error) {
       console.log(error);
-      setError("Something went wrong");
+      setError('Something went wrong');
     }
   };
 
@@ -52,6 +52,7 @@ const LoginPage = () => {
               {error}
             </div>
           )}
+          <div></div>
           <div>
             <label
               htmlFor="email"

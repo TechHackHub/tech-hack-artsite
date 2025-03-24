@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useFormContext } from "react-hook-form";
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
   FormDescription,
@@ -9,9 +9,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { InputProps } from "@/components/inputs/types";
-import { Switch } from "../ui/switch";
+} from '@/components/ui/form';
+import { InputProps } from '@/components/inputs/types';
+import { Switch } from '../ui/switch';
 
 type Props = InputProps;
 

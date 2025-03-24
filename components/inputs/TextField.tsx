@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { InputHTMLAttributes } from "react";
-import { useFormContext } from "react-hook-form";
+import React, { InputHTMLAttributes } from 'react';
+import { useFormContext } from 'react-hook-form';
 import {
   FormControl,
   FormDescription,
@@ -9,9 +9,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { InputProps } from "@/components/inputs/types";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { InputProps } from '@/components/inputs/types';
 
 type Props = InputProps & InputHTMLAttributes<HTMLInputElement>;
 

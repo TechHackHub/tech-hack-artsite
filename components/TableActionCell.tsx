@@ -1,7 +1,7 @@
-import React from "react";
-import { Button } from "./ui/button";
-import { Edit2, Trash } from "lucide-react";
-import DeleteConfirmButton from "./DeleteConfirmButton";
+import React from 'react';
+import { Button } from './ui/button';
+import { Edit2, Trash } from 'lucide-react';
+import DeleteConfirmButton from './DeleteConfirmButton';
 
 type TableActionCellProps = {
   isUpdating?: boolean;

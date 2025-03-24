@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import TransitionPage from "@/components/TransitionPage";
+import React, { useState } from 'react';
+import TransitionPage from '@/components/TransitionPage';
 import {
   useCreateSubject,
   useDeleteSubject,
   useSubjects,
   useUpdateSubject,
-} from "./hooks";
-import { ColumnDef } from "@tanstack/react-table";
-import { Subject } from "./types";
-import { formDateTimeToString } from "@/app/libs/utils";
-import TableActionCell from "@/components/TableActionCell";
-import DataTable from "@/components/ui/DataTable";
-import CreateButton from "@/components/CreateButton";
-import AppDialog from "@/components/AppDialog";
-import NameForm from "../materials/components/NameForm";
+} from './hooks';
+import { ColumnDef } from '@tanstack/react-table';
+import { Subject } from './types';
+import { formDateTimeToString } from '@/app/libs/utils';
+import TableActionCell from '@/components/TableActionCell';
+import DataTable from '@/components/ui/DataTable';
+import CreateButton from '@/components/CreateButton';
+import AppDialog from '@/components/AppDialog';
+import NameForm from '../materials/components/NameForm';
 
 const SubjectPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +34,7 @@ const SubjectPage = () => {
   const { isLoading: isDeleting, mutateAsync: deleteSubjectAsync } =
     useDeleteSubject();
 
-  const handleCreateSubmit = async (formData: Pick<Subject, "name">) => {
+  const handleCreateSubmit = async (formData: Pick<Subject, 'name'>) => {
     const data = await createSubjectAsync({ data: formData });
 
     if (data) {
@@ -47,7 +47,7 @@ const SubjectPage = () => {
     setIsEditDialogOpen(true);
   };
 
-  const handleEditSubmit = async (formData: Pick<Subject, "name">) => {
+  const handleEditSubmit = async (formData: Pick<Subject, 'name'>) => {
     if (!editingSubject) {
       return;
     }
@@ -72,14 +72,14 @@ const SubjectPage = () => {
   };
 
   const columns: ColumnDef<Subject>[] = [
-    { accessorKey: "name", header: "NAME" },
+    { accessorKey: 'name', header: 'NAME' },
     {
-      accessorKey: "updatedAt",
-      header: "UPDATED AT",
+      accessorKey: 'updatedAt',
+      header: 'UPDATED AT',
       cell: (row) => formDateTimeToString(row?.row?.original?.updatedAt),
     },
     {
-      id: "action",
+      id: 'action',
       cell: (row) => {
         return (
           <TableActionCell
@@ -110,7 +110,7 @@ const SubjectPage = () => {
         isOpen={isOpen}
         onOpenChange={setIsOpen}
       >
-        <NameForm<Pick<Subject, "name">>
+        <NameForm<Pick<Subject, 'name'>>
           loading={isCreateing}
           onSubmit={handleCreateSubmit}
           onCancel={() => setIsOpen(false)}
@@ -123,7 +123,7 @@ const SubjectPage = () => {
         isOpen={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
       >
-        <NameForm<Pick<Subject, "name">>
+        <NameForm<Pick<Subject, 'name'>>
           loading={isUpdating}
           initialValues={editingSubject}
           onSubmit={handleEditSubmit}

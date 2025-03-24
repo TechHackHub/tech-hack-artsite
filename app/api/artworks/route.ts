@@ -33,14 +33,14 @@ export async function GET(req: Request) {
       include: {
         subject: { select: { id: true, name: true } },
         materials: { select: { id: true, name: true } },
-        images: true
+        images: true,
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
     });
 
     return NextResponse.json({ list: artworks });
   } catch (e) {
-    console.error("get artworks error", e);
+    console.error('get artworks error', e);
     return handleApiError(e);
   }
 }
@@ -54,21 +54,21 @@ export async function POST(req: Request) {
 
     let createData = {
       materials: {
-        connect: materialIds.map((id: string) => ({ id }))
+        connect: materialIds.map((id: string) => ({ id })),
       },
       images: {
-        create: images
+        create: images,
       },
-      ...rest
-    }
+      ...rest,
+    };
 
     if (subjectId) {
       createData = {
         ...createData,
         subject: {
-          connect: { id: subjectId }
-        }
-      }
+          connect: { id: subjectId },
+        },
+      };
     }
 
     const artwork = await prisma.artwork.create({
@@ -77,7 +77,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ data: artwork });
   } catch (e) {
-    console.error("create artwork error", e);
+    console.error('create artwork error', e);
     return handleApiError(e);
   }
 }

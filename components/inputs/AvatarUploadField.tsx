@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { useFormContext } from "react-hook-form";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { InputProps } from "@/components/inputs/types";
-import { Loader2, Upload, User } from "lucide-react";
-import { uploadFile } from "@/app/libs/actions";
+import React, { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { InputProps } from '@/components/inputs/types';
+import { Loader2, Upload, User } from 'lucide-react';
+import { uploadFile } from '@/app/libs/actions';
 
 type Props = InputProps;
 
 const AvatarUploadField: React.FC<Props> = ({ name }) => {
   const form = useFormContext();
-  const imageUrl = form.watch(name) ?? "";
+  const imageUrl = form.watch(name) ?? '';
   const [isLoading, setIsLoading] = useState(false);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

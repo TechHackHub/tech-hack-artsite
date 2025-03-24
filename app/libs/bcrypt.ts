@@ -5,7 +5,10 @@ export default class Bcrypt {
     return await bcrtpt.hash(password, 10);
   }
 
-  static async comparePassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
+  static async comparePassword(
+    plainPassword: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
     return await bcrtpt.compare(plainPassword, hashedPassword);
   }
 }

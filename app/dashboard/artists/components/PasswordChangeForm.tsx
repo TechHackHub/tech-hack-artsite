@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import TextField from "@/components/inputs/TextField";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import TextField from '@/components/inputs/TextField';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Form } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
 
 const schema = yup.object({
-  oldpassword: yup.string().required("Old password is required").default(""),
-  newpassword: yup.string().required("New password is required").default(""),
+  oldpassword: yup.string().required('Old password is required').default(''),
+  newpassword: yup.string().required('New password is required').default(''),
   newpasswordconfirm: yup
     .string()
-    .required("New password confirm is required")
-    .oneOf([yup.ref("newpassword")], "Passwords must match")
-    .default(""),
+    .required('New password confirm is required')
+    .oneOf([yup.ref('newpassword')], 'Passwords must match')
+    .default(''),
 });
 
 export type PasswordChangeFormType = yup.InferType<typeof schema>;
@@ -29,9 +29,9 @@ type Props = {
 const PasswordChangeForm: React.FC<Props> = ({ isLoading, onSubmit }) => {
   const form = useForm<PasswordChangeFormType>({
     defaultValues: {
-      oldpassword: "",
-      newpassword: "",
-      newpasswordconfirm: "",
+      oldpassword: '',
+      newpassword: '',
+      newpasswordconfirm: '',
     },
     resolver: yupResolver(schema),
   });

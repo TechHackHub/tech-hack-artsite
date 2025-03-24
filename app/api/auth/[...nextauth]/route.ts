@@ -1,17 +1,19 @@
-import prisma from "@/app/libs/prisma";
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import prisma from '@/app/libs/prisma';
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { label: "email", type: "text", placeholder: "starklin" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'email', type: 'text', placeholder: 'starklin' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const user = await prisma.artist.findUnique({ where: { email: credentials?.email } });
+        const user = await prisma.artist.findUnique({
+          where: { email: credentials?.email },
+        });
 
         // TODO: check pwd
 
@@ -25,7 +27,7 @@ const handler = NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/login"
+    signIn: '/login',
   },
 });
 

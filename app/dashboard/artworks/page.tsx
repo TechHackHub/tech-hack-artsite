@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useRouter } from "next/navigation";
-import TransitionPage from "@/components/TransitionPage";
-import CreateButton from "@/components/CreateButton";
-import { useArtworks } from "./hooks";
-import DataTable from "@/components/ui/DataTable";
-import { ColumnDef } from "@tanstack/react-table";
-import { Artwork } from "./types";
-import { formDateTimeToString } from "@/app/libs/utils";
-import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
-import TableActionCell from "@/components/TableActionCell";
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import TransitionPage from '@/components/TransitionPage';
+import CreateButton from '@/components/CreateButton';
+import { useArtworks } from './hooks';
+import DataTable from '@/components/ui/DataTable';
+import { ColumnDef } from '@tanstack/react-table';
+import { Artwork } from './types';
+import { formDateTimeToString } from '@/app/libs/utils';
+import { Badge } from '@/components/ui/badge';
+import Image from 'next/image';
+import TableActionCell from '@/components/TableActionCell';
 
 const ArtworkListPage = () => {
   const router = useRouter();
@@ -20,12 +20,12 @@ const ArtworkListPage = () => {
   const artworks = data?.list ?? [];
 
   const columns: ColumnDef<Artwork>[] = [
-    { accessorKey: "title", header: "Title" },
+    { accessorKey: 'title', header: 'Title' },
     {
-      accessorKey: "images",
-      header: "Images",
+      accessorKey: 'images',
+      header: 'Images',
       cell: (row) => {
-        const img = row?.row?.original?.images?.[0]?.url ?? "/file.svg";
+        const img = row?.row?.original?.images?.[0]?.url ?? '/file.svg';
 
         return (
           <Image
@@ -38,13 +38,13 @@ const ArtworkListPage = () => {
       },
     },
     {
-      accessorKey: "subject",
-      header: "Subject",
+      accessorKey: 'subject',
+      header: 'Subject',
       cell: (row) => row?.row?.original?.subject?.name,
     },
     {
-      accessorKey: "materials",
-      header: "Materials",
+      accessorKey: 'materials',
+      header: 'Materials',
       cell: (row) => {
         return (
           <div className="flex flex-no-wrap gap-1">
@@ -56,20 +56,20 @@ const ArtworkListPage = () => {
       },
     },
     {
-      accessorKey: "completedAt",
-      header: "Completed Year",
+      accessorKey: 'completedAt',
+      header: 'Completed Year',
       cell: (row) =>
         formDateTimeToString(row?.row?.original?.completedAt, {
-          format: "YYYY",
+          format: 'YYYY',
         }),
     },
     {
-      accessorKey: "updatedAt",
-      header: "Updated at",
+      accessorKey: 'updatedAt',
+      header: 'Updated at',
       cell: (row) => formDateTimeToString(row?.row?.original?.updatedAt),
     },
     {
-      id: "action",
+      id: 'action',
       cell: (row) => {
         return (
           <TableActionCell
@@ -94,7 +94,7 @@ const ArtworkListPage = () => {
         toolbars={[
           <CreateButton
             key="create-btn"
-            onClick={() => router.push("/dashboard/artworks/create")}
+            onClick={() => router.push('/dashboard/artworks/create')}
           />,
         ]}
       />

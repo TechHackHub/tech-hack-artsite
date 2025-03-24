@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { signOut } from "next-auth/react";
+import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 import {
   Sidebar,
   SidebarContent,
@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
-} from "@/components/ui/sidebar";
+} from '@/components/ui/sidebar';
 import {
   User,
   Image,
@@ -21,50 +21,50 @@ import {
   Award,
   Group,
   GalleryVerticalEnd,
-} from "lucide-react";
-import { usePathname } from "next/navigation";
+} from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Artist } from "@/app/dashboard/artists/types";
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Artist } from '@/app/dashboard/artists/types';
 
-import { useEffect, useState } from "react";
-import { useArtist } from "@/app/dashboard/artists/hooks";
+import { useEffect, useState } from 'react';
+import { useArtist } from '@/app/dashboard/artists/hooks';
 
 const menuItems = [
   {
-    title: "Artist",
-    url: "/dashboard/artists",
-    basePath: "/dashboard/artists",
+    title: 'Artist',
+    url: '/dashboard/artists',
+    basePath: '/dashboard/artists',
     icon: User,
   },
   {
-    title: "Materials",
-    url: "/dashboard/materials",
-    basePath: "/dashboard/materials",
+    title: 'Materials',
+    url: '/dashboard/materials',
+    basePath: '/dashboard/materials',
     icon: PaintBucket,
   },
   {
-    title: "Subjects",
-    url: "/dashboard/subjects",
-    basePath: "/dashboard/subjects",
+    title: 'Subjects',
+    url: '/dashboard/subjects',
+    basePath: '/dashboard/subjects',
     icon: Group,
   },
   {
-    title: "Artworks",
-    url: "/dashboard/artworks",
-    basePath: "/dashboard/artworks",
+    title: 'Artworks',
+    url: '/dashboard/artworks',
+    basePath: '/dashboard/artworks',
     icon: Image,
   },
   {
-    title: "Achievements",
-    url: "/dashboard/achievements",
-    basePath: "/dashboard/achievements",
+    title: 'Achievements',
+    url: '/dashboard/achievements',
+    basePath: '/dashboard/achievements',
     icon: Award,
   },
 ];
@@ -76,7 +76,7 @@ const AppSidebar = () => {
 
   const [user, setUser] = useState<Pick<
     Artist,
-    "avatar" | "name" | "email"
+    'avatar' | 'name' | 'email'
   > | null>(null);
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const AppSidebar = () => {
   }, [artist]);
 
   const handleLogout = async () => {
-    await signOut({ redirect: false, callbackUrl: "/login" });
+    await signOut({ redirect: false, callbackUrl: '/login' });
   };
 
   return (
@@ -143,7 +143,7 @@ const AppSidebar = () => {
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src={user?.avatar} alt={user?.name} />
                     <AvatarFallback className="rounded-lg bg-slate-300">
-                      {user?.name?.toUpperCase()?.charAt(0) ?? "U"}
+                      {user?.name?.toUpperCase()?.charAt(0) ?? 'U'}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">

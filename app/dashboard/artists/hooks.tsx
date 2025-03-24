@@ -1,14 +1,14 @@
-import useAppQuery from "@/app/libs/hooks/useAppQuery";
-import { Artist, UpdateArtist } from "./types";
-import useAppMutation from "@/app/libs/hooks/useAppMutation";
-import { toast } from "sonner";
+import useAppQuery from '@/app/libs/hooks/useAppQuery';
+import { Artist, UpdateArtist } from './types';
+import useAppMutation from '@/app/libs/hooks/useAppMutation';
+import { toast } from 'sonner';
 
-const QUERY_KEY = "artist";
+const QUERY_KEY = 'artist';
 
 export const useArtist = () => {
   return useAppQuery<Artist | null>({
     queryKey: [QUERY_KEY],
-    url: "/api/artist/",
+    url: '/api/artist/',
   });
 };
 
@@ -18,11 +18,11 @@ export const useUpdateArtist = () => {
     UpdateArtist,
     { id: string }
   >({
-    method: "PUT",
+    method: 'PUT',
     url: ({ id }) => `/api/artist/${id}`,
     invalidateQueries: [QUERY_KEY],
     onSuccess: () => {
-      toast.error("Artist updated");
+      toast.error('Artist updated');
     },
   });
 
@@ -33,7 +33,7 @@ export const useUpdateArtist = () => {
   const updatePassword = async (
     id: string,
     oldPassword: string,
-    newPassword: string
+    newPassword: string,
   ) => {
     return await mutateAsync({
       data: { oldPassword, newPassword },

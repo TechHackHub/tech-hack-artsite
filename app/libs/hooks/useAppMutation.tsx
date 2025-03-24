@@ -1,9 +1,9 @@
-import axios, { AxiosError } from "axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
+import axios, { AxiosError } from 'axios';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 type Props<TData, TParams = void> = {
-  method?: "POST" | "PUT" | "DELETE";
+  method?: 'POST' | 'PUT' | 'DELETE';
   url: string | ((params: TParams) => string);
   invalidateQueries?: string[];
   showErrorToast?: boolean;
@@ -12,7 +12,7 @@ type Props<TData, TParams = void> = {
 };
 
 const useAppMutation = <TData, TVariables, TParams = void>({
-  method = "POST",
+  method = 'POST',
   url,
   invalidateQueries,
   showErrorToast = true,
@@ -28,12 +28,12 @@ const useAppMutation = <TData, TVariables, TParams = void>({
     data?: TVariables;
     params?: TParams;
   }) => {
-    const finalUrl = typeof url === "function" ? url(params!) : url;
+    const finalUrl = typeof url === 'function' ? url(params!) : url;
 
     const response = await axios<TData>(finalUrl, {
       method,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       data,
     });

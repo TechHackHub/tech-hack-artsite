@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import prisma from "@/app/libs/prisma";
-import { Artist } from "@/app/dashboard/artists/types";
-import { handleApiError } from "@/app/libs/utils";
+import prisma from '@/app/libs/prisma';
+import { Artist } from '@/app/dashboard/artists/types';
+import { handleApiError } from '@/app/libs/utils';
 
 export async function GET() {
   try {
@@ -10,7 +10,7 @@ export async function GET() {
 
     return NextResponse.json<Artist | null>(artist);
   } catch (e) {
-    console.error("get artist error", e);
+    console.error('get artist error', e);
     return handleApiError(e);
   }
 }

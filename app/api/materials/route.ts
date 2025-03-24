@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import prisma from "@/app/libs/prisma";
-import { handleApiError } from "@/app/libs/utils";
-import { validateSubjectBodyAsync } from "../subjects/validations";
+import prisma from '@/app/libs/prisma';
+import { handleApiError } from '@/app/libs/utils';
+import { validateSubjectBodyAsync } from '../subjects/validations';
 
 export async function GET() {
   try {
@@ -13,12 +13,12 @@ export async function GET() {
         createdAt: true,
         updatedAt: true,
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
     });
 
     return NextResponse.json({ list: materials });
   } catch (e) {
-    console.error("get materials error", e);
+    console.error('get materials error', e);
     return handleApiError(e);
   }
 }
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ data: material });
   } catch (e) {
-    console.error("create material error", e);
+    console.error('create material error', e);
     return handleApiError(e);
   }
 }

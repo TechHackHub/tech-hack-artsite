@@ -1,7 +1,7 @@
-import React from "react";
-import { UploadResult } from "@/app/api/types";
-import { Input } from "../ui/input";
-import useFileUpload from "@/app/libs/hooks/useFileUpload";
+import React from 'react';
+import { UploadResult } from '@/app/api/types';
+import { Input } from '../ui/input';
+import useFileUpload from '@/app/libs/hooks/useFileUpload';
 
 type FileUploadFieldProps = {
   label: string;
@@ -20,7 +20,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({
     useFileUpload();
 
   const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
